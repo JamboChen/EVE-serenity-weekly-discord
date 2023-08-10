@@ -6,6 +6,7 @@ import aiohttp
 from . import groups
 from logger import get_logger
 from utils.tools import send
+import os
 
 
 log = get_logger(__name__)
@@ -38,16 +39,13 @@ async def listen():
 async def super_and_10b(killmail: dict):
     ship_type_id = killmail["victim"]["ship_type_id"]
 
-    if not (
-        ship_type_id in groups.Supercarrier | groups.Titan
-        or killmail["zkb"]["totalValue"] > 10e10
-    ):
-        return
-
     system_id = killmail["solar_system_id"]
     hour = killmail["killmail_time"][:13].replace("T", "").replace("-", "")
 
     zkb = killmail["zkb"]["url"]
     br = f"https://br.evetools.org/related/{system_id}/{hour}00"
-    log.info(f"{zkb}\n{br}\n\n")
-    await send(f"{zkb}\n{br}\n\n")
+
+    if ship_type_id in groups.Supercarrier | groups.Titan:
+        await send(f"{zkb}\n{br}", os.getenv("SUPER_WEBHOOK"))
+    elif killmail["zkb"]["totalValue"] >= 10_000_000_000:
+        await send(f"{zkb}\n{br}", os.getenv("10B_WEBHOOK"))
