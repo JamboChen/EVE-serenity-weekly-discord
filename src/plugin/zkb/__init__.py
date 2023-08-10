@@ -40,7 +40,7 @@ async def super_and_10b(killmail: dict):
 
     if not (
         ship_type_id in groups.Supercarrier | groups.Titan
-        or killmail["zkb"]["totalValue"] > 10e7
+        or killmail["zkb"]["totalValue"] > 10e10
     ):
         return
 
