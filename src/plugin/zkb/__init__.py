@@ -1,14 +1,12 @@
-from register import register_plugin
-
-# from session import session
 import asyncio
-import aiohttp
-from . import groups
-from logger import get_logger
-from utils.tools import send
 import os
 
+import aiohttp
+from logger import get_logger
+from register import register_plugin
+from utils.tools import send
 
+from . import groups
 
 log = get_logger(__name__)
 attention = []

@@ -1,5 +1,5 @@
-from discord import Webhook
 import aiohttp
+from discord import Webhook
 
 
 async def send(text: str, webhook: str):

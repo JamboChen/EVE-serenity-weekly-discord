@@ -2,9 +2,9 @@ import asyncio
 import importlib
 import os
 
-from register import registered_functions
-from logger import configure_logging, get_logger
 from dotenv import load_dotenv
+from logger import configure_logging, get_logger
+from register import registered_functions
 
 load_dotenv()
 
