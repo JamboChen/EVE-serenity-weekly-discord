@@ -25,10 +25,7 @@ COPY --from=builder /project/__pypackages__/3.11/bin/* /bin/
 
 # copy source code
 COPY src/ /project/src
-
-RUN if [ -f ".env" ]; then \
-    COPY .env /project; \
-    fi
+COPY .env /project
 
 # set command/entrypoint, adapt to fit your needs
 CMD ["python", "/project/src/bot.py"]
