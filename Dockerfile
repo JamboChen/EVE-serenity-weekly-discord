@@ -27,7 +27,7 @@ COPY --from=builder /project/__pypackages__/3.11/bin/* /bin/
 COPY src/ /project/src
 
 RUN if [ -f ".env" ]; then \
-    cp .env /project; \
+    COPY .env /project; \
     fi
 
 # set command/entrypoint, adapt to fit your needs
