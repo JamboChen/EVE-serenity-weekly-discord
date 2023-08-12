@@ -1,10 +1,12 @@
 import asyncio
 import importlib
 import os
+import traceback
 
 from dotenv import load_dotenv
 from logger import configure_logging, get_logger
 from register import registered_functions
+from utils.tools import send
 
 load_dotenv()
 
@@ -31,7 +33,14 @@ def load_plugins():
 
 async def run_plugins():
     tasks = [func() for func in registered_functions]
-    await asyncio.gather(*tasks)
+    while True:
+        try:
+            await asyncio.gather(*tasks)
+        except Exception:
+            error_message = "An error occurred:\n" + traceback.format_exc()
+            log.error(error_message)
+            if error_channel := os.getenv("ERROR_CHANNEL"):
+                await send(error_message, os.getenv(error_channel))
 
 
 if __name__ == "__main__":
