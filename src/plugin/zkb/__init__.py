@@ -46,5 +46,5 @@ async def super_and_10b(killmail: dict):
 
     if ship_type_id in groups.Supercarrier | groups.Titan:
         await send(f"{zkb}\n{br}", os.getenv("SUPER_WEBHOOK"))
-    elif killmail["zkb"]["totalValue"] >= 10_000_000_000:
+    elif killmail["zkb"].get("totalValue", 0) >= 10_000_000_000:
         await send(f"{zkb}\n{br}", os.getenv("10B_WEBHOOK"))
