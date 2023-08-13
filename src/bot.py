@@ -40,7 +40,7 @@ async def run_plugins():
             error_message = "An error occurred:\n" + traceback.format_exc()
             log.error(error_message)
             if error_channel := os.getenv("ERROR_CHANNEL"):
-                await send(error_message, os.getenv(error_channel))
+                await send(error_message, error_channel)
 
 
 if __name__ == "__main__":
