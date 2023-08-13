@@ -32,9 +32,9 @@ def load_plugins():
 
 
 async def run_plugins():
-    tasks = [func() for func in registered_functions]
     while True:
         try:
+            tasks = [func() for func in registered_functions]
             await asyncio.gather(*tasks)
         except Exception:
             error_message = "An error occurred:\n" + traceback.format_exc()
