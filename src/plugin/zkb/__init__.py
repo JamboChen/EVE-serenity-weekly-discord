@@ -32,6 +32,10 @@ async def listen():
                         await asyncio.gather(*[func(msg) for func in attention])
             except aiohttp.ServerTimeoutError:
                 log.error("Server timeout")
+            except aiohttp.WSServerHandshakeError as e:
+                if e.status == 502:
+                    log.error("Bad gateway")
+                    await asyncio.sleep(10 * 60)
 
 
 @add_attention
